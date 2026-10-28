@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import ExplorationGallery from "../components/ExplorationGallery.astro";
+import { explorations } from "../data/explorations";
+---
+
+<Layout title="Eksplorasi KKL 2026">
+  <div class="min-h-screen bg-[var(--bg-page)]">
+    <Navbar active="eksplorasi" />
+
+    <main class="mx-auto w-full max-w-[1400px] px-4 pb-14 pt-32 md:px-8 md:pt-36">
+      <h1 class="sr-only">Eksplorasi Dokumentasi KKL 2026</h1>
+
+      <ExplorationGallery items={explorations} />
+
+      <p class="mt-16 text-center text-[11px] leading-relaxed text-[var(--text-muted)]">
+        Seluruh foto merupakan dokumentasi kegiatan KKL Informatika UPGRIS 2026.
+      </p>
+    </main>
+  </div>
+
+  <Footer />
+</Layout>

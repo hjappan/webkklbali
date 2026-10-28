@@ -1,0 +1,309 @@
+---
+interface Props {
+  active?: "beranda" | "jadwal" | "eksplorasi";
+}
+
+const { active = "beranda" } = Astro.props;
+
+const links = [
+  { key: "beranda", label: "Beranda", href: "/" },
+  { key: "jadwal", label: "Jadwal", href: "/#jadwal" },
+  { key: "eksplorasi", label: "Eksplorasi", href: "/#eksplorasi" },
+] as const;
+---
+
+<header class="fixed inset-x-0 top-0 z-50 border-b border-[var(--border-soft)] bg-[var(--nav-bg)] backdrop-blur-xl transition-colors duration-300">
+  <div class="mx-auto w-full max-w-[1080px] px-4 md:px-6">
+    <nav
+      class="flex items-center justify-between gap-4 py-3 md:py-4"
+      aria-label="Navigasi utama"
+    >
+      <a
+        href="/"
+        class="whitespace-nowrap text-[15px] font-extrabold tracking-tight text-[var(--nav-text)] min-[360px]:text-base md:text-lg"
+        aria-label="KKL 2026 - Beranda"
+      >
+        KKL 2026
+      </a>
+
+      <div class="flex items-center gap-1.5 md:gap-8">
+        <ul class="hidden items-center gap-3 text-[11.5px] min-[360px]:gap-5 min-[360px]:text-[13px] md:flex md:gap-10 md:text-sm">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  data-nav-key={link.key}
+                  data-section-link={link.href.startsWith("/#") ? link.href.slice(2) : undefined}
+                  class:list={[
+                    "group relative inline-block transition-colors",
+                    active === link.key ? "font-semibold" : "font-medium",
+                  ]}
+                  aria-current={active === link.key ? "page" : undefined}
+                >
+                  {link.label}
+                  <span
+                    aria-hidden="true"
+                    data-nav-underline
+                    class:list={[
+                      "pointer-events-none absolute -bottom-[9px] left-0 h-[2.5px] w-full origin-left rounded-full bg-[var(--accent)] transition-transform duration-300 ease-out group-hover:scale-x-100",
+                      active === link.key ? "scale-x-100" : "scale-x-0",
+                    ]}
+                  ></span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <button
+          type="button"
+          data-theme-toggle
+          class="theme-toggle flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[var(--nav-text)] transition-colors hover:bg-[var(--nav-hover-bg)]"
+          aria-label="Aktifkan mode terang"
+          title="Aktifkan mode terang"
+        >
+          <svg
+            data-theme-icon="sun"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.7"
+            stroke="currentColor"
+            class="h-5 w-5"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path
+              stroke-linecap="round"
+              d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"
+            />
+          </svg>
+          <svg
+            data-theme-icon="moon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.7"
+            stroke="currentColor"
+            class="h-5 w-5"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 1 0 9.8 9.8Z"
+            />
+          </svg>
+        </button>
+
+        <button
+          type="button"
+          data-menu-button
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[var(--nav-text)] transition-colors hover:bg-[var(--nav-hover-bg)] md:hidden"
+          aria-expanded="false"
+          aria-controls="menu-mobile"
+          aria-label="Buka menu"
+        >
+          <svg
+            data-menu-open
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="h-5 w-5"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+          <svg
+            data-menu-close
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="hidden h-5 w-5"
+            aria-hidden="true"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <div
+      id="menu-mobile"
+      data-mobile-menu
+      class="grid grid-rows-[0fr] opacity-0 transition-all duration-300 ease-out md:hidden"
+      aria-hidden="true"
+      inert
+    >
+      <div class="min-h-0 overflow-hidden">
+        <div class="border-t border-[var(--border-soft)] py-2">
+          <ul class="flex flex-col text-sm">
+            {
+              links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    data-nav-key={link.key}
+                    data-section-link={link.href.startsWith("/#") ? link.href.slice(2) : undefined}
+                    class:list={[
+                      "flex items-center justify-between rounded-2xl px-4 py-3 transition-colors hover:bg-[var(--nav-hover-bg)]",
+                      active === link.key ? "font-semibold" : "font-medium",
+                    ]}
+                    aria-current={active === link.key ? "page" : undefined}
+                  >
+                    {link.label}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2"
+                      stroke="currentColor"
+                      class="h-4 w-4 text-[var(--nav-muted)]"
+                      aria-hidden="true"
+                    >
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7" />
+                    </svg>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>("[data-nav-key]"));
+
+  const setActiveNav = (key: string) => {
+    navLinks.forEach((link) => {
+      const isActive = link.dataset.navKey === key;
+
+      link.classList.toggle("font-semibold", isActive);
+      link.classList.toggle("font-medium", !isActive);
+
+      if (isActive) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+
+      const underline = link.querySelector<HTMLElement>("[data-nav-underline]");
+      underline?.classList.toggle("scale-x-100", isActive);
+      underline?.classList.toggle("scale-x-0", !isActive);
+    });
+  };
+
+  const sections = [
+    { key: "jadwal", element: document.getElementById("jadwal") },
+    { key: "eksplorasi", element: document.getElementById("eksplorasi") },
+  ].filter((section) => section.element !== null) as {
+    key: string;
+    element: HTMLElement;
+  }[];
+
+  let suppressScrollSpyUntil = 0;
+
+  const updateActiveFromScroll = () => {
+    if (!sections.length || performance.now() < suppressScrollSpyUntil) return;
+
+    let activeKey = "beranda";
+    for (const section of sections) {
+      if (section.element.getBoundingClientRect().top <= 160) {
+        activeKey = section.key;
+      }
+    }
+
+    setActiveNav(activeKey);
+  };
+
+  window.addEventListener("scroll", updateActiveFromScroll, { passive: true });
+
+  document.querySelectorAll<HTMLAnchorElement>("[data-section-link]").forEach((link) => {
+    link.addEventListener("click", (event) => {
+      const id = link.dataset.sectionLink;
+      if (!id) return;
+
+      const target = document.getElementById(id);
+      if (!target) return;
+
+      event.preventDefault();
+      setActiveNav(id);
+      suppressScrollSpyUntil = performance.now() + 900;
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      history.replaceState(null, "", `#${id}`);
+    });
+  });
+
+  const menuButton = document.querySelector<HTMLButtonElement>("[data-menu-button]");
+  const mobileMenu = document.querySelector<HTMLElement>("[data-mobile-menu]");
+  const menuOpenIcon = document.querySelector<SVGElement>("[data-menu-open]");
+  const menuCloseIcon = document.querySelector<SVGElement>("[data-menu-close]");
+
+  const setMenuOpen = (open: boolean) => {
+    if (!menuButton || !mobileMenu) return;
+
+    menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute("aria-label", open ? "Tutup menu" : "Buka menu");
+    mobileMenu.setAttribute("aria-hidden", String(!open));
+    mobileMenu.inert = !open;
+    mobileMenu.classList.toggle("grid-rows-[1fr]", open);
+    mobileMenu.classList.toggle("opacity-100", open);
+    mobileMenu.classList.toggle("grid-rows-[0fr]", !open);
+    mobileMenu.classList.toggle("opacity-0", !open);
+    menuOpenIcon?.classList.toggle("hidden", open);
+    menuCloseIcon?.classList.toggle("hidden", !open);
+  };
+
+  menuButton?.addEventListener("click", () => {
+    setMenuOpen(menuButton.getAttribute("aria-expanded") !== "true");
+  });
+
+  mobileMenu?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setMenuOpen(false));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!menuButton || !mobileMenu) return;
+
+    const target = event.target as Node;
+    if (!menuButton.contains(target) && !mobileMenu.contains(target)) {
+      setMenuOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setMenuOpen(false);
+  });
+
+  window.matchMedia("(min-width: 768px)").addEventListener("change", (event) => {
+    if (event.matches) setMenuOpen(false);
+  });
+
+  const themeToggle = document.querySelector<HTMLButtonElement>("[data-theme-toggle]");
+  const themeColorMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+
+  const syncThemeToggle = () => {
+    const isLight = document.documentElement.dataset.theme === "light";
+    const label = isLight ? "Aktifkan mode gelap" : "Aktifkan mode terang";
+    themeToggle?.setAttribute("aria-label", label);
+    themeToggle?.setAttribute("title", label);
+    themeColorMeta?.setAttribute("content", isLight ? "#f3f5f8" : "#0b1120");
+  };
+
+  themeToggle?.addEventListener("click", () => {
+    const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try {
+      localStorage.setItem("kkl-theme", next);
+    } catch {}
+    syncThemeToggle();
+  });
+
+  syncThemeToggle();
+  updateActiveFromScroll();
+</script>

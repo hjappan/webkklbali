@@ -1,0 +1,550 @@
+﻿---
+const days = [
+  {
+    label: "Hari 1",
+    date: "18 Agustus 2026",
+    x: 18,
+    y: 80,
+    theme: "Semarang · Pelepasan & Perjalanan Darat (WIB)",
+    agenda: [
+      { time: "06.00–07.00", activity: "Persiapan pemberangkatan", location: "Kampus 1 UPGRIS Semarang" },
+      { time: "07.00–08.00", activity: "Perjalanan menuju PT Victoria Care Indonesia", location: "Semarang" },
+      { time: "08.00–09.00", activity: "Kunjungan industri PT Victoria Care Indonesia", location: "Semarang" },
+      { time: "09.00–12.00", activity: "Perjalanan menuju Caruban", location: "R.M. Titin Caruban" },
+      { time: "12.00–13.00", activity: "Makan siang", location: "R.M. Titin Caruban" },
+      { time: "13.00–18.00", activity: "Melanjutkan perjalanan menuju Pulau Dewata Bali", location: "Singgah makan malam di R.M. Puritama" },
+      { time: "23.00", activity: "Diharapkan tiba di Pelabuhan Ketapang", location: "Ketapang, Banyuwangi" }
+    ]
+  },
+  {
+    label: "Hari 2",
+    date: "19 Agustus 2026",
+    x: 33,
+    y: 64,
+    theme: "Denpasar · Penyeberangan, Joger, Ulun Danu & Devdan (WITA)",
+    agenda: [
+      { time: "Dini hari", activity: "Menyeberang ke Gilimanuk dan lanjut menuju Hotel Made Bali", location: "Ketapang–Gilimanuk" },
+      { time: "05.00–08.00", activity: "Transit dan makan pagi", location: "Hotel Made Bali" },
+      { time: "08.00–09.30", activity: "Perjalanan menuju Joger Luwus", location: "Luwus, Tabanan" },
+      { time: "09.30–11.00", activity: "Eksplorasi pabrik kata-kata Joger Luwus", location: "Joger Luwus" },
+      { time: "11.00–11.30", activity: "Perjalanan menuju Candi Kuning Ulun Danu Beratan", location: "Bedugul" },
+      { time: "11.30–12.30", activity: "Eksplorasi Candi Kuning", location: "Ulun Danu Beratan" },
+      { time: "12.30–13.30", activity: "Makan siang", location: "Ulun Danu Beratan" },
+      { time: "13.30–16.00", activity: "Perjalanan menuju Dewata", location: "Kawasan Bali" },
+      { time: "16.00–18.00", activity: "Makan malam dan belanja oleh-oleh khas Bali", location: "Dewata Oleh-Oleh" },
+      { time: "18.00–19.00", activity: "Perjalanan menuju Nusa Dua", location: "Nusa Dua" },
+      { time: "19.00–20.00", activity: "Eksplorasi pertunjukan Tari Devdan Show", location: "Devdan Show, Nusa Dua" },
+      { time: "20.00–21.00", activity: "Perjalanan menuju Hotel Quest San Denpasar", location: "Denpasar" },
+      { time: "21.00", activity: "Check-in hotel dan istirahat malam", location: "Hotel Quest San Denpasar" }
+    ]
+  },
+  {
+    label: "Hari 3",
+    date: "20 Agustus 2026",
+    x: 48,
+    y: 48,
+    theme: "Denpasar · BDI, Krisna, Kuta, Pandawa, Kecak & Makrab (WITA)",
+    agenda: [
+      { time: "05.30–08.00", activity: "Breakfast", location: "Hotel Quest San Denpasar" },
+      { time: "08.00–09.00", activity: "Perjalanan menuju Balai Diklat Industri Denpasar", location: "Denpasar" },
+      { time: "09.00–10.30", activity: "Kunjungan di Balai Diklat Industri Denpasar", location: "BDI Denpasar" },
+      { time: "10.30–11.00", activity: "Perjalanan menuju Krisna oleh-oleh khas Bali", location: "Sunset Road" },
+      { time: "11.00–13.00", activity: "Makan siang dan belanja oleh-oleh khas Bali", location: "Krisna Sunset Road" },
+      { time: "13.00–14.00", activity: "Perjalanan menuju Pantai Kuta", location: "Kuta" },
+      { time: "14.00–15.30", activity: "Eksplorasi Pantai Kuta", location: "Pantai Kuta" },
+      { time: "15.30–16.00", activity: "Perjalanan menuju Pantai Pandawa", location: "Pandawa" },
+      { time: "16.00–17.30", activity: "Eksplorasi Pantai Pandawa", location: "Pantai Pandawa" },
+      { time: "17.30–18.00", activity: "Persiapan menuju tempat pementasan Tari Kecak", location: "Pantai Pandawa" },
+      { time: "18.00–19.00", activity: "Eksplorasi budaya Tari Kecak", location: "Pantai Pandawa" },
+      { time: "19.00", activity: "Melanjutkan perjalanan menuju Jimbaran", location: "Cafe Tepi Pantai" },
+      { time: "19.00–21.30", activity: "Dinner dilanjutkan makrab", location: "Cafe Tepi Pantai, Jimbaran" },
+      { time: "21.30–22.30", activity: "Perjalanan kembali menuju hotel", location: "Hotel Quest San Denpasar" },
+      { time: "22.30", activity: "Istirahat", location: "Hotel" }
+    ]
+  },
+  {
+    label: "Hari 4",
+    date: "21 Agustus 2026",
+    x: 63,
+    y: 32,
+    theme: "Denpasar–Semarang · Checkout, Belanja & Perjalanan Pulang (WITA/WIB)",
+    agenda: [
+      { time: "05.00–06.00", activity: "Persiapan pribadi", location: "Hotel Quest San Denpasar" },
+      { time: "06.00–08.00", activity: "Breakfast dan check-out hotel", location: "Hotel Quest San Denpasar" },
+      { time: "10.30–11.00", activity: "Perjalanan menuju Karang Kurnia oleh-oleh khas Bali", location: "Bali" },
+      { time: "11.00–13.00", activity: "Belanja oleh-oleh khas Bali", location: "Karang Kurnia" },
+      { time: "13.00", activity: "Melanjutkan perjalanan menuju Pelabuhan Gilimanuk", location: "Singgah makan siang di RM. Soka Indah" },
+      { time: "17.00", activity: "Menyeberang ke Pelabuhan Ketapang untuk melanjutkan perjalanan ke Semarang", location: "Gilimanuk–Ketapang" },
+      { time: "20.00–21.30", activity: "Singgah makan malam", location: "Local Resto" },
+      { time: "21.30", activity: "Melanjutkan perjalanan pulang ke Semarang", location: "Jalur Pantura" }
+    ]
+  },
+  {
+    label: "Hari 5",
+    date: "22 Agustus 2026",
+    x: 78,
+    y: 16,
+    theme: "Semarang · Tiba di Kampus (WIB)",
+    agenda: [
+      { time: "05.00", activity: "Pagi hari diharapkan tiba di kampus tercinta", location: "Kampus 1 UPGRIS Semarang" },
+      { time: "Selesai", activity: "Penutupan KKL & kembali ke rumah masing-masing", location: "Semarang" }
+    ]
+  }
+];
+
+const ROAD_PATH = `M ${days[0].x} ${days[0].y} L ${days[4].x} ${days[4].y}`;
+---
+
+<style>
+  .tl { --c-base: var(--accent); --c-light: var(--accent); --bg-warm: #dbe8ff; }
+  .tl .road { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  .tl .node-item {
+    position: absolute;
+    left: var(--px); top: var(--py);
+    transform: translate(-50%, -100%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tl .card-pill {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 220px;
+    padding: 8px 20px 8px 8px;
+    border-radius: 999px;
+    background: var(--tl-card-bg);
+    box-shadow: 0 18px 45px -30px rgba(15, 27, 63, 0.45);
+    border: 1px solid var(--tl-card-border);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 8px;
+    cursor: pointer;
+    text-align: left;
+    font: inherit;
+    color: inherit;
+  }
+  .tl .node-item:hover .card-pill,
+  .tl .node-item:focus-visible .card-pill {
+    transform: translateY(-2px);
+    border-color: rgba(127, 164, 217, 0.6);
+    box-shadow: var(--tl-card-hover-shadow), 0 18px 45px -30px rgba(15, 27, 63, 0.6);
+  }
+
+  .tl .lamp-assembly {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+  }
+  .tl .lamp-head {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    border-radius: 999px;
+    background: var(--tl-lamp-bg);
+    border: 3px solid var(--c-base);
+    transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    z-index: 2;
+  }
+  .tl .lamp-pole {
+    width: 2px;
+    height: 28px;
+    background: linear-gradient(180deg, var(--c-base) 0%, transparent 100%);
+    opacity: 0.7;
+  }
+  .tl .beam {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 100px;
+    background: linear-gradient(180deg, rgba(127, 164, 217, 0.85) 0%, rgba(127, 164, 217, 0.15) 60%, transparent 100%);
+    clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(1px);
+    transition: opacity 0.4s ease;
+  }
+  .tl .node-item:hover .lamp-head,
+  .tl .node-item:focus-within .lamp-head {
+    background: var(--bg-warm);
+    border-color: #142147;
+    box-shadow: 0 0 0 4px rgba(127, 164, 217, 0.3), 0 0 22px 10px rgba(127, 164, 217, 0.6);
+    transform: scale(1.15);
+  }
+  .tl .node-item:hover .beam,
+  .tl .node-item:focus-within .beam {
+    opacity: 0.85;
+  }
+  .tl .node-item.lit .lamp-head {
+    background: var(--bg-warm);
+    border-color: #142147;
+    box-shadow: 0 0 0 4px rgba(127, 164, 217, 0.3), 0 0 22px 10px rgba(127, 164, 217, 0.6);
+    transform: scale(1.15);
+  }
+  .tl .node-item.lit .beam {
+    opacity: 0.85;
+  }
+
+  /* Modal */
+  .tl-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .tl-modal.open { display: flex; }
+
+  .tl-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: var(--modal-backdrop);
+    backdrop-filter: blur(4px);
+    border: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    animation: fade 0.25s ease;
+  }
+
+  .tl-modal__panel {
+    position: relative;
+    width: min(560px, 100%);
+    max-height: 82vh;
+    background: var(--modal-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 20px;
+    box-shadow: 0 30px 80px rgba(10, 20, 40, 0.35);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: popIn 0.28s ease;
+  }
+
+  .tl-modal__header {
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #0e1c3f 0%, #1b2a4d 100%);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tl-modal__badge {
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 0 20px rgba(127, 164, 217, 0.35);
+  }
+  .tl-modal__title {
+    font-size: 18px;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.1;
+  }
+  .tl-modal__sub {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 2px;
+  }
+  .tl-modal__close {
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .tl-modal__close:hover { background: rgba(255, 255, 255, 0.2); }
+
+  .tl-modal__body {
+    padding: 20px 24px 24px;
+    overflow-y: auto;
+  }
+
+  .tl-modal__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--bg-soft);
+    color: var(--text-strong);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .tl-modal__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+  .tl-modal__list::before {
+    content: "";
+    position: absolute;
+    left: 90px;
+    top: 14px;
+    bottom: 14px;
+    width: 2px;
+    background: linear-gradient(180deg, #dbe8ff 0%, #7fa4d9 50%, #dbe8ff 100%);
+    border-radius: 2px;
+  }
+
+  .tl-modal__row {
+    display: grid;
+    grid-template-columns: 90px 16px 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 12px 0;
+    border-bottom: 1px dashed var(--border-soft);
+  }
+  .tl-modal__row:last-child { border-bottom: 0; }
+
+  .tl-modal__time {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-strong);
+    background: var(--bg-soft);
+    border-radius: 999px;
+    padding: 6px 10px;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .tl-modal__dot {
+    width: 12px;
+    height: 12px;
+    margin-top: 8px;
+    border-radius: 999px;
+    background: var(--modal-bg);
+    border: 3px solid var(--accent);
+    box-shadow: 0 0 0 3px var(--modal-bg);
+    position: relative;
+    z-index: 1;
+  }
+  .tl-modal__activity {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-strong);
+    line-height: 1.3;
+  }
+  .tl-modal__location {
+    display: block;
+    font-size: 12px;
+    color: var(--text-body);
+    margin-top: 2px;
+  }
+
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes popIn {
+    from { transform: translateY(20px) scale(0.96); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  @media (max-width: 480px) {
+    .tl-modal__list::before { left: 76px; }
+    .tl-modal__row { grid-template-columns: 76px 16px 1fr; gap: 8px; }
+    .tl-modal__time { font-size: 11px; padding: 5px 8px; }
+  }
+</style>
+
+<div class="tl relative mx-auto hidden h-[520px] w-full max-w-[1200px] lg:block">
+  <svg class="road" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path d={ROAD_PATH} fill="none" stroke="#5b7fbf" stroke-width="6" opacity="0.25" stroke-linecap="round" />
+    <path d={ROAD_PATH} fill="none" stroke="#7fa4d9" stroke-width="1.2" stroke-linecap="round" stroke-dasharray="0 5" vector-effect="non-scaling-stroke" />
+  </svg>
+
+  <ol class="h-full w-full" aria-label="Timeline agenda KKL 2026">
+    {days.map((day, i) => (
+      <li class="node-item" data-day={i} style={`--px: ${day.x}%; --py: ${day.y}%`}>
+        <button
+          type="button"
+          class="card-pill"
+          data-open-day={i}
+          aria-haspopup="dialog"
+          aria-controls={`tl-modal-${i}`}
+          aria-expanded="false"
+        >
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#e9f1fd] text-[#142147]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="16" rx="2" />
+              <path stroke-linecap="round" d="M16 3v4M8 3v4M3 11h18" />
+            </svg>
+          </span>
+          <span class="min-w-0">
+            <span class="block text-[14px] font-bold leading-tight text-[var(--tl-card-text)]">{day.label}</span>
+            <span class="mt-0.5 block whitespace-nowrap text-[12px] leading-tight text-[var(--tl-card-muted)]">{day.date}</span>
+          </span>
+        </button>
+
+        <div class="lamp-assembly">
+          <span class="lamp-head" aria-hidden="true"></span>
+          <span class="beam" aria-hidden="true"></span>
+          <span class="lamp-pole" aria-hidden="true"></span>
+        </div>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<div class="tl relative mx-auto w-full max-w-[420px] lg:hidden">
+  <span class="absolute bottom-[30px] left-[15px] top-[30px] border-l-2 border-dotted border-[#7fa4d9]" aria-hidden="true"></span>
+  <ol class="flex flex-col gap-3" aria-label="Timeline agenda KKL 2026">
+    {days.map((day, i) => (
+      <li class="relative flex items-center gap-3.5">
+        <button
+          type="button"
+           class="relative z-10 h-[30px] w-[30px] shrink-0 rounded-full border-[3px] border-[var(--accent)] bg-[var(--tl-lamp-bg)] transition duration-300 hover:bg-[#dbe8ff] hover:border-[#142147] hover:shadow-[var(--tl-circle-hover-shadow)]"
+          data-open-day={i}
+          aria-haspopup="dialog"
+          aria-controls={`tl-modal-${i}`}
+          aria-expanded="false"
+          aria-label={`Buka rundown ${day.label}`}
+        ></button>
+        <button
+          type="button"
+           class="flex flex-1 cursor-pointer items-center gap-3 rounded-full border border-[var(--tl-card-border)] bg-[var(--tl-card-bg)] py-2 pl-2 pr-5 text-left shadow-md transition duration-300 hover:shadow-[var(--tl-card-hover-shadow)]"
+          data-open-day={i}
+          aria-haspopup="dialog"
+          aria-controls={`tl-modal-${i}`}
+          aria-expanded="false"
+        >
+          <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#e9f1fd] text-[#142147]">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" class="h-5 w-5" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="16" rx="2" />
+              <path stroke-linecap="round" d="M16 3v4M8 3v4M3 11h18" />
+            </svg>
+          </span>
+          <span class="min-w-0">
+            <span class="block text-[14px] font-bold leading-tight text-[var(--tl-card-text)]">{day.label}</span>
+            <span class="mt-0.5 block whitespace-nowrap text-[12px] leading-tight text-[var(--tl-card-muted)]">{day.date}</span>
+          </span>
+        </button>
+      </li>
+    ))}
+  </ol>
+</div>
+
+{days.map((day, i) => (
+  <div id={`tl-modal-${i}`} class="tl-modal" role="dialog" aria-modal="true" aria-labelledby={`tl-modal-title-${i}`} aria-hidden="true">
+    <button type="button" class="tl-modal__backdrop" data-close-day={i} aria-label="Tutup"></button>
+    <div class="tl-modal__panel" role="document">
+      <div class="tl-modal__header">
+        <span class="tl-modal__badge" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.7" stroke="currentColor" class="h-5 w-5 text-[#dbe8ff]">
+            <rect x="3" y="5" width="18" height="16" rx="2" />
+            <path stroke-linecap="round" d="M16 3v4M8 3v4M3 11h18" />
+          </svg>
+        </span>
+        <div>
+          <h3 id={`tl-modal-title-${i}`} class="tl-modal__title">{day.label} · {day.date}</h3>
+          <p class="tl-modal__sub">{day.theme}</p>
+        </div>
+        <button type="button" class="tl-modal__close" data-close-day={i} aria-label="Tutup rundown">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="h-4 w-4">
+            <path stroke-linecap="round" d="M6 6l12 12M18 6 6 18" />
+          </svg>
+        </button>
+      </div>
+      <div class="tl-modal__body">
+        <span class="tl-modal__meta">
+          <span class="h-2 w-2 rounded-full bg-[var(--accent)]"></span>
+          {day.agenda.length} Kegiatan
+        </span>
+        <ul class="tl-modal__list">
+          {day.agenda.map((item) => (
+            <li class="tl-modal__row">
+              <span class="tl-modal__time">{item.time}</span>
+              <span class="tl-modal__dot" aria-hidden="true"></span>
+              <span>
+                <span class="tl-modal__activity">{item.activity}</span>
+                <span class="tl-modal__location">{item.location}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+))}
+
+<script>
+  const TimelineModal = {
+    openIndex: -1,
+    lastFocus: null,
+
+    open(i) {
+      const modal = document.getElementById(`tl-modal-${i}`);
+      if (!modal) return;
+      if (this.openIndex >= 0 && this.openIndex !== i) this.close(this.openIndex);
+      this.lastFocus = document.activeElement;
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      this.openIndex = i;
+      document.querySelectorAll(`[data-open-day="${i}"]`).forEach((el) => el.setAttribute("aria-expanded", "true"));
+      const closeBtn = modal.querySelector(".tl-modal__close");
+      if (closeBtn) closeBtn.focus();
+    },
+
+    close(i) {
+      const idx = typeof i === "number" && i >= 0 ? i : this.openIndex;
+      if (idx < 0) return;
+      const modal = document.getElementById(`tl-modal-${idx}`);
+      if (modal) {
+        modal.classList.remove("open");
+        modal.setAttribute("aria-hidden", "true");
+      }
+      document.body.style.overflow = "";
+      document.querySelectorAll(`[data-open-day="${idx}"]`).forEach((el) => el.setAttribute("aria-expanded", "false"));
+      this.openIndex = -1;
+      if (this.lastFocus instanceof HTMLElement) this.lastFocus.focus();
+    },
+  };
+
+  document.addEventListener("click", (e) => {
+    const target = e.target;
+    if (!(target instanceof Element)) return;
+    const opener = target.closest("[data-open-day]");
+    if (opener) {
+      const idx = Number(opener.getAttribute("data-open-day"));
+      if (!Number.isNaN(idx)) TimelineModal.open(idx);
+      return;
+    }
+    const closer = target.closest("[data-close-day]");
+    if (closer) {
+      const idx = Number(closer.getAttribute("data-close-day"));
+      if (!Number.isNaN(idx)) TimelineModal.close(idx);
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && TimelineModal.openIndex >= 0) {
+      TimelineModal.close(TimelineModal.openIndex);
+    }
+  });
+</script>

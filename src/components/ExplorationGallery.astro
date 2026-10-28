@@ -1,0 +1,116 @@
+---
+import ExplorationCard from "./ExplorationCard.astro";
+import type {
+  ExplorationCategory,
+  ExplorationItem,
+} from "../data/explorations";
+
+interface Props {
+  items: ExplorationItem[];
+  initialFilter?: "semua" | ExplorationCategory;
+  variant?: "default" | "editorial";
+  ariaLabel?: string;
+}
+
+const {
+  items,
+  initialFilter = "semua",
+  variant = "default",
+  ariaLabel = "Dokumentasi eksplorasi KKL 2026",
+} = Astro.props;
+
+const isEditorial = variant === "editorial";
+
+const filters = [
+  { key: "semua", label: "Semua" },
+  { key: "industri", label: "Kunjungan Industri" },
+  { key: "wisata", label: "Wisata & Budaya" },
+] as const;
+
+const isShown = (category: ExplorationCategory) =>
+  initialFilter === "semua" || category === initialFilter;
+---
+
+<div class="flex justify-center">
+  <div
+    class="inline-grid grid-cols-[auto_auto] items-center justify-items-center gap-1 rounded-full bg-[var(--bg-card)] p-1 shadow-[0_18px_45px_-28px_rgba(15,27,63,0.45)] min-[380px]:inline-flex min-[380px]:flex-wrap min-[380px]:justify-center md:gap-1.5 md:p-1.5"
+    role="group"
+    aria-label="Filter kategori eksplorasi"
+  >
+    {
+      filters.map((filter) => (
+        <button
+          type="button"
+          class:list={[
+            "filter-btn rounded-full px-2.5 py-1.5 text-[12px] font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--text-strong)] min-[380px]:px-3 min-[380px]:text-[12.5px] md:px-5 md:py-2.5 md:text-sm",
+            filter.key === "semua" ? "col-span-2 min-[380px]:col-span-1" : "",
+          ]}
+          data-filter={filter.key}
+          data-active={String(initialFilter === filter.key)}
+          aria-pressed={String(initialFilter === filter.key)}
+        >
+          {filter.label}
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<section
+  class:list={[
+    "mx-auto w-full",
+    isEditorial
+      ? "mt-10 grid max-w-[1360px] grid-cols-1 gap-5 sm:grid-cols-2 md:mt-12 lg:grid-cols-4"
+      : "mt-16 grid max-w-[1320px] grid-cols-1 gap-8 md:mt-20 md:grid-cols-2 lg:grid-cols-3",
+  ]}
+  aria-label={ariaLabel}
+>
+  {
+    items.map((item) => (
+      <div
+        data-category={item.category}
+        class:list={[
+          isEditorial ? "h-full" : "",
+          isShown(item.category) ? "" : "is-hidden",
+        ]}
+      >
+        <ExplorationCard item={item} variant={variant} />
+      </div>
+    ))
+  }
+</section>
+
+<script>
+  const filterButtons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+  const cards = document.querySelectorAll<HTMLElement>("[data-category]");
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const filter = button.dataset.filter ?? "semua";
+
+      filterButtons.forEach((item) => {
+        const isActive = item === button;
+        item.dataset.active = String(isActive);
+        item.setAttribute("aria-pressed", String(isActive));
+      });
+
+      cards.forEach((card) => {
+        const isVisible =
+          filter === "semua" || card.dataset.category === filter;
+        card.classList.toggle("is-hidden", !isVisible);
+      });
+    });
+  });
+</script>
+
+<style>
+  .filter-btn[data-active="true"] {
+    background-color: var(--filter-active-bg);
+    color: var(--filter-active-text);
+    font-weight: 600;
+  }
+
+  [data-category].is-hidden {
+    display: none;
+  }
+</style>

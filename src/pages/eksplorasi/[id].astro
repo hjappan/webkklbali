@@ -1,0 +1,348 @@
+﻿---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { explorations } from "../../data/explorations";
+import type { ExplorationItem } from "../../data/explorations";
+
+export function getStaticPaths() {
+  return explorations.map((item) => ({
+    params: { id: item.id },
+    props: { item },
+  }));
+}
+
+interface Props {
+  item: ExplorationItem;
+}
+
+const { item } = Astro.props;
+const relatedStories = explorations
+  .filter((story) => story.id !== item.id)
+  .slice(0, 2);
+const purposeLabel =
+  item.category === "wisata" ? "WAWASAN BUDAYA" : "WAWASAN INDUSTRI";
+const reflectionLead = item.reflection.text.charAt(0);
+const reflectionRest = item.reflection.text.slice(1);
+---
+
+<Layout title={`${item.title} - KKL 2026`} description={item.description}>
+  <div class="min-h-screen bg-[var(--bg-page)]">
+    <Navbar active="eksplorasi" />
+
+    <main class="mx-auto w-full max-w-[1120px] px-4 pb-24 pt-32 md:px-8 md:pt-36">
+      <article>
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--text-muted)] transition-colors hover:text-[var(--text-strong)]"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.8"
+            stroke="currentColor"
+            class="h-4 w-4"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M20 12H4m0 0 6-6m-6 6 6 6"
+            />
+          </svg>
+          Kembali ke Beranda
+        </a>
+
+        <div
+          class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs font-medium text-[var(--text-muted)] md:text-sm"
+        >
+          <span class="inline-flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-4 w-4"
+            >
+              <rect x="3" y="5" width="18" height="16" rx="2" />
+              <path stroke-linecap="round" d="M16 3v4M8 3v4M3 11h18" />
+            </svg>
+            {item.date}
+          </span>
+          <span class="h-1 w-1 rounded-full bg-[var(--text-muted)]" aria-hidden="true"></span>
+          <span class="inline-flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="h-4 w-4"
+            >
+              <path
+                stroke-linejoin="round"
+                d="M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z"
+              />
+              <circle cx="12" cy="10" r="2.5" />
+            </svg>
+            {item.location}
+          </span>
+        </div>
+
+        <h1
+          class="mt-4 max-w-[860px] text-[30px] font-bold leading-[1.15] tracking-[-0.02em] text-[var(--text-strong)] md:text-[40px]"
+        >
+          {item.title}
+        </h1>
+        <p class="mt-4 max-w-[820px] text-[15px] leading-[1.8] text-[var(--text-body)] md:text-base">
+          {item.description}
+        </p>
+
+        <figure class="mt-8">
+          <div class="h-[280px] w-full overflow-hidden rounded-3xl sm:h-[360px] lg:h-[460px]">
+            <img
+              src={item.image}
+              alt={item.alt}
+              style={item.imagePosition ? `object-position: ${item.imagePosition}` : undefined}
+              class="h-full w-full object-cover object-center"
+            />
+          </div>
+          <figcaption class="mt-3 text-[12.5px] italic leading-relaxed text-[var(--text-muted)]">
+            Dokumentasi kegiatan KKL Informatika UPGRIS di {item.location}.
+          </figcaption>
+        </figure>
+
+        <div class="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_330px]">
+          <div class="space-y-10">
+            <section>
+              <h2 class="text-sm font-bold uppercase tracking-wider text-[var(--text-strong)]">
+                Intisari &amp; Wawasan Pembelajaran
+              </h2>
+              <div class="mt-4 space-y-6">
+                <div>
+                  <h3 class="text-sm font-semibold text-[var(--text-strong)]">{purposeLabel}</h3>
+                  <p class="mt-1.5 text-[13.5px] leading-[1.8] text-[var(--text-body)]">
+                    {item.details.purpose}
+                  </p>
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold text-[var(--text-strong)]">RELEVANSI INFORMATIKA</h3>
+                  <p class="mt-1.5 text-[13.5px] leading-[1.8] text-[var(--text-body)]">
+                    {item.details.relevance}
+                  </p>
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold text-[var(--text-strong)]">PENGALAMAN SOSIAL</h3>
+                  <p class="mt-1.5 text-[13.5px] leading-[1.8] text-[var(--text-body)]">
+                    {item.details.socialImpact}
+                  </p>
+                </div>
+              </div>
+            </section>
+
+            <section>
+              <h2 class="text-lg font-semibold text-[var(--text-strong)]">{item.reflection.title}</h2>
+              <div class="mt-3">
+                <span
+                  class="float-left mr-3 mt-1 font-serif text-[52px] font-bold leading-none text-[var(--text-strong)]"
+                >
+                  {reflectionLead}
+                </span>
+                <p class="text-[13.5px] leading-[1.85] text-[var(--text-body)]">
+                  {reflectionRest}
+                </p>
+              </div>
+            </section>
+          </div>
+
+          <aside class="space-y-6">
+            <section class="rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-card)] p-5">
+              <h2 class="flex items-center gap-2 text-sm font-semibold text-[var(--text-strong)]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-4 w-4"
+                >
+                  <path
+                    stroke-linejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                Fakta Kegiatan
+              </h2>
+
+              <div class="mt-5 space-y-5 text-[13px]">
+                <div>
+                  <h3 class="font-semibold text-[var(--text-strong)]">{item.facts.locationLabel}</h3>
+                  <p class="mt-1 text-[var(--text-body)]">{item.location}</p>
+                  <p class="text-[var(--text-body)]">{item.facts.region}</p>
+                </div>
+                <div class="border-t border-[var(--border-soft)] pt-4">
+                  <h3 class="font-semibold text-[var(--text-strong)]">WAKTU PELAKSANAAN</h3>
+                  <p class="mt-1 text-[var(--text-body)]">{item.facts.time}</p>
+                  <p class="text-[var(--text-body)]">{item.facts.timeNote}</p>
+                </div>
+                <div class="border-t border-[var(--border-soft)] pt-4">
+                  <h3 class="font-semibold text-[var(--text-strong)]">{item.facts.highlightLabel}</h3>
+                  <p class="mt-1 text-[var(--text-body)]">{item.facts.highlightTitle}</p>
+                  <p class="mt-1 text-[var(--text-body)]">{item.facts.highlightNote}</p>
+                </div>
+                <div class="border-t border-[var(--border-soft)] pt-4">
+                  <h3 class="font-semibold text-[var(--text-strong)]">PETA DESTINASI</h3>
+                  <p class="mt-2 inline-flex items-center gap-2 text-[var(--text-body)]">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-3.5 w-3.5"
+                    >
+                      <path
+                        stroke-linejoin="round"
+                        d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                      />
+                      <path
+                        stroke-linejoin="round"
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"
+                      />
+                    </svg>
+                    {item.location}
+                  </p>
+                  <p class="mt-2 text-[11px] text-[var(--text-muted)]">
+                    Status Peserta<br />
+                    <span class="text-sm font-semibold text-[var(--text-strong)]">100% Hadir Lengkap</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="2.5"
+                      stroke="currentColor"
+                      class="ml-2 inline h-4 w-4 text-[var(--accent-strong)]"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4.5 12.75l6 6 9-13.5"
+                      />
+                    </svg>
+                  </p>
+                </div>
+              </div>
+            </section>
+          </aside>
+        </div>
+
+        <section class="mt-16 border-t border-[var(--border-strong)] pt-10">
+          <div class="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <h2 class="text-[11px] font-bold uppercase tracking-widest text-[var(--text-muted)]">
+                EKSPLORASI LANJUTAN
+              </h2>
+              <p class="mt-1 text-base font-semibold text-[var(--text-strong)]">
+                CERITA DOKUMENTASI LAINNYA
+              </p>
+            </div>
+            <a
+              href="/eksplorasi"
+              class="inline-flex items-center gap-2 text-[13px] font-medium text-[var(--text-strong)] underline decoration-1 underline-offset-4 transition-colors hover:text-[var(--accent-strong)]"
+            >
+              Lihat Seluruh Cerita
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.8"
+                stroke="currentColor"
+                class="h-4 w-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M4 12h16m0 0-6-6m6 6-6 6"
+                />
+              </svg>
+            </a>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+            {
+              relatedStories.map((story) => (
+                <a
+                  href={`/eksplorasi/${story.id}`}
+                  class="group block overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--bg-card)] shadow-[0_18px_50px_-40px_rgba(15,27,63,0.5)] transition duration-300 hover:-translate-y-1"
+                >
+                  <div class="aspect-[8/5] overflow-hidden">
+                    <img
+                      src={story.image}
+                      alt={story.alt}
+                      loading="lazy"
+                      style={story.imagePosition ? `object-position: ${story.imagePosition}` : undefined}
+                      class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                  <div class="p-5">
+                    <div class="flex flex-wrap items-center gap-2 text-[11px] text-[var(--text-muted)]">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.7"
+                        stroke="currentColor"
+                        class="h-3.5 w-3.5"
+                      >
+                        <rect x="3" y="5" width="18" height="16" rx="2" />
+                        <path stroke-linecap="round" d="M16 3v4M8 3v4M3 11h18" />
+                      </svg>
+                      <span>{story.date}</span>
+                      <span class="text-[var(--text-muted)]">•</span>
+                      <span>{story.location}</span>
+                    </div>
+                    <h3 class="mt-2 text-[15px] font-semibold text-[var(--text-strong)]">
+                      {story.title}
+                    </h3>
+                    <p class="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-[var(--text-body)]">
+                      {story.description}
+                    </p>
+                    <span class="mt-4 inline-flex items-center gap-2 text-[13px] font-medium text-[var(--text-strong)] group-hover:text-[var(--accent-strong)]">
+                      Jelajahi Cerita
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.8"
+                        stroke="currentColor"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M4 12h16m0 0-6-6m6 6-6 6"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </a>
+              ))
+            }
+          </div>
+        </section>
+      </article>
+    </main>
+  </div>
+
+  <Footer />
+</Layout>
+
+<style>
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

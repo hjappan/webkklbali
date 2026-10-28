@@ -1,0 +1,46 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import ScheduleTimeline from "../components/ScheduleTimeline.astro";
+---
+
+<Layout title="Jadwal & Agenda KKL 2026">
+  <div class="min-h-screen bg-[var(--bg-page-alt)]">
+    <Navbar active="jadwal" />
+
+    <main class="mx-auto w-full max-w-[1400px] px-4 pb-24 pt-32 md:px-8 md:pt-36">
+      <header class="text-center">
+        <span
+          class="inline-flex items-center gap-2 rounded-full bg-[var(--bg-soft)] px-4 py-2 text-[13px] font-semibold text-[var(--text-strong)]"
+        >
+          <span class="h-2 w-2 rounded-full bg-[var(--accent)]"></span>
+          Rangkaian Kegiatan · 18–22 Agustus 2026
+        </span>
+
+        <h1
+          class="mt-5 text-[38px] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--text-strong)] sm:text-5xl md:text-[56px]"
+        >
+          Jadwal &amp; Agenda KKL 2026
+        </h1>
+
+        <p
+          class="mx-auto mt-5 max-w-[780px] text-[15px] leading-7 text-[var(--text-body)] md:text-base"
+        >
+          Timeline terstruktur perjalanan 5 hari mahasiswa Informatika UPGRIS di
+          Bali menggabungkan kunjungan industri, workshop kolaboratif, serta
+          penjelajahan budaya dan pesona Pulau Dewata.
+        </p>
+      </header>
+
+      <section
+        class="mx-auto mt-16 w-full max-w-[1200px] md:mt-20"
+        aria-label="Timeline agenda KKL 2026"
+      >
+        <ScheduleTimeline />
+      </section>
+    </main>
+  </div>
+
+  <Footer />
+</Layout>

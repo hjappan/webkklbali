@@ -1,0 +1,184 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import ScheduleTimeline from "../components/ScheduleTimeline.astro";
+import ExplorationGallery from "../components/ExplorationGallery.astro";
+import { explorations } from "../data/explorations";
+---
+
+<Layout>
+  <main>
+    <section
+      class="relative min-h-screen overflow-hidden"
+      aria-labelledby="hero-title"
+    >
+      <div
+        class="absolute inset-0 bg-cover bg-center"
+        style="background-image: url('/bg.jpg');"
+      >
+      </div>
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-[#0b1120]/95 via-[#0b1120]/80 to-[#0b1120]/35"
+      >
+      </div>
+      <div class="absolute inset-0 bg-[#0b1120]/25"></div>
+
+      <Navbar active="beranda" />
+
+      <div
+        class="relative z-10 mx-auto flex min-h-screen w-full max-w-[1080px] flex-col justify-center px-4 pb-16 pt-40 md:px-6"
+      >
+        <span
+          class="inline-flex w-fit items-center rounded-full border border-white/25 bg-white/[0.03] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-white/85"
+        >
+          KKL Informatika UPGRIS 2026
+        </span>
+
+        <h1
+          id="hero-title"
+          class="mt-7 text-[38px] font-extrabold leading-[1.05] tracking-[-0.02em] sm:text-6xl md:text-[68px] min-[380px]:text-[42px]"
+        >
+          <span class="block text-white">Jelajah Wawasan</span>
+          <span class="block text-[#a9c2e9]">&amp; Pulau Dewata</span>
+        </h1>
+
+        <p class="mt-7 max-w-[560px] text-[15px] leading-7 text-white/75 md:text-base">
+          Website ini disusun sebagai dokumentasi kegiatan Kuliah Kerja Lapangan
+          (KKL) mahasiswa Informatika Universitas PGRI Semarang di Bali, yang
+          merangkum kunjungan industri, destinasi-destinasi ikonik, hingga
+          kekayaan budaya yang tetap lestari.
+        </p>
+
+        <div class="mt-9 flex flex-wrap items-center gap-4">
+          <a
+            href="/eksplorasi"
+            class="group inline-flex items-center gap-3 rounded-full bg-[#33416e] py-2 pl-6 pr-2 text-sm font-semibold text-white transition hover:bg-[#3d4e82]"
+          >
+            Jelajahi Dokumentasi
+            <span
+              class="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition group-hover:bg-white/20"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+                class="h-4 w-4"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12l-7.5 7.5M21 12H3" />
+              </svg>
+            </span>
+          </a>
+          <a
+            href="#jadwal"
+            data-section-link="jadwal"
+            class="rounded-full border border-white/40 px-7 py-[13px] text-sm font-semibold text-white transition hover:bg-white/10"
+          >
+            Lihat Destinasi
+          </a>
+        </div>
+
+        <div class="mt-12 max-w-[460px] border-t border-white/20 pt-7">
+          <dl class="grid grid-cols-3 gap-6 text-white">
+            <div>
+              <dt class="text-2xl font-extrabold">5 Hari</dt>
+              <dd class="mt-1 text-xs text-white/60">Perjalanan Edukatif</dd>
+            </div>
+            <div>
+              <dt class="text-2xl font-extrabold">2 Mitra</dt>
+              <dd class="mt-1 text-xs text-white/60">Industri &amp; Balai Diklat</dd>
+            </div>
+            <div>
+              <dt class="text-2xl font-extrabold">6+ Titik</dt>
+              <dd class="mt-1 text-xs text-white/60">Wisata &amp; Budaya</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <div class="bg-[var(--bg-page)]">
+      <section
+        id="jadwal"
+        class="scroll-mt-28 bg-[var(--bg-page-alt)] px-4 py-20 md:scroll-mt-32 md:px-8 md:py-24"
+        aria-labelledby="jadwal-title"
+      >
+        <div class="mx-auto w-full max-w-[1400px]">
+          <header class="text-center">
+            <span
+              class="inline-flex items-center gap-2 rounded-full bg-[var(--bg-soft)] px-4 py-2 text-[12px] font-semibold text-[var(--text-strong)]"
+            >
+              <span class="h-2 w-2 rounded-full bg-[var(--accent)]"></span>
+              Rangkaian Kegiatan · 18–22 Agustus 2026
+            </span>
+
+            <h2
+              id="jadwal-title"
+              class="mt-5 text-[36px] font-extrabold leading-[1.1] tracking-[-0.03em] text-[var(--text-strong)] sm:text-[42px] md:text-[48px]"
+            >
+              Jadwal &amp; Agenda KKL 2026
+            </h2>
+
+            <p
+              class="mx-auto mt-5 max-w-[720px] text-[14.5px] leading-7 text-[var(--text-body)] md:text-[15px]"
+            >
+              Timeline terstruktur perjalanan 5 hari mahasiswa Informatika UPGRIS
+              di Bali menggabungkan kunjungan industri, workshop kolaboratif,
+              serta penjelajahan budaya dan pesona Pulau Dewata.
+            </p>
+          </header>
+
+          <section
+            class="mx-auto mt-14 w-full max-w-[1200px] md:mt-16"
+            aria-label="Ringkasan timeline agenda KKL 2026"
+          >
+            <ScheduleTimeline />
+          </section>
+        </div>
+      </section>
+
+      <section
+        id="eksplorasi"
+        class="scroll-mt-28 bg-[var(--bg-page)] px-4 py-20 md:scroll-mt-32 md:px-8 md:py-24"
+        aria-labelledby="eksplorasi-title"
+      >
+        <div class="mx-auto w-full max-w-[1400px]">
+          <header class="text-center">
+            <span
+              class="inline-flex items-center gap-2 rounded-full bg-[var(--bg-soft)] px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--text-strong)]"
+            >
+              <span class="h-1.5 w-1.5 rounded-full bg-[var(--accent)]"></span>
+              Katalog &amp; Destinasi
+            </span>
+
+            <h2
+              id="eksplorasi-title"
+              class="mt-5 font-serif text-[36px] font-semibold leading-[1.15] tracking-[-0.01em] text-[var(--text-strong)] sm:text-[44px] md:text-[52px]"
+            >
+              Eksplorasi &amp; <span class="text-[var(--heading-accent)]">Pesona KKL</span>
+            </h2>
+
+            <p
+              class="mx-auto mt-4 max-w-[620px] text-[14.5px] leading-7 text-[var(--text-body)]"
+            >
+              Menelusuri jejak kunjungan industri hingga keindahan budaya dan
+              alam Bali yang mengesankan.
+            </p>
+          </header>
+
+          <div class="mt-10 md:mt-12">
+          <ExplorationGallery
+            items={explorations}
+            variant="editorial"
+            ariaLabel="Pratinjau eksplorasi KKL 2026"
+          />
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
